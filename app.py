@@ -23,6 +23,6 @@ def hello_world():
     
 # main driver function
 if __name__ == '__main__':
-    app.run()
+    app.run(host= "199.247.31.183" , port="80")
     
 	

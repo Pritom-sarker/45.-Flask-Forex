@@ -44,7 +44,7 @@ if __name__ == '__main__':
     oldText = []
     id = '14631934'
     hash = "62c6c4263e06b6f800acc32c188f1d6f"
-    telApiName = 'newApi11'
+    telApiName = 'newApi1'
     hour = 10
     print('Bot wll sleep for next ',hour,"Hours")
     # time.s/r * 3600)

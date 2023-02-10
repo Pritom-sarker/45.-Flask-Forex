@@ -42,8 +42,8 @@ def get_message_from_telegram():
 if __name__ == '__main__':
     
     oldText = []
-    id = '7245145'
-    hash = "962930c707a46df8f9f6f31244c502c5"
+    id = '14631934'
+    hash = "62c6c4263e06b6f800acc32c188f1d6f"
     telApiName = 'newApi11'
     hour = 10
     print('Bot wll sleep for next ',hour,"Hours")

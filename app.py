@@ -52,7 +52,7 @@ if __name__ == '__main__':
     text_list = []
     thread = Thread(target = read_file)
     thread.start()
-   # app.run(host= "199.247.31.183" , port="80")
-    app.run(host='0.0.0.0' , port='80')
+    app.run(host= "199.247.31.183" , port="80")
+#     app.run(host='0.0.0.0' , port='80')
     
 	

@@ -4,12 +4,8 @@ import time
 def writeText(textt):
     print('')
     s = ''
-    lines =  textt.split('\n')
-    for line in lines:
-        if "ORDER" in line:
-            s = line
-            print(s)
-            break
+    for t in textt[-5:]:
+        s+=str(t)+'#'
         
     while True:
         try:
@@ -31,10 +27,16 @@ def get_message_from_telegram():
         if str(s) in oldText:
             print('Same text!!')
         else:
-            oldText.append(s)
+            
+            lines =  s.split('\n')
+            for line in lines:
+                if "ORDER" in line:
+                    s = line
+                    oldText.append(s)
+                    print(s)
+                    break
             if 'ORDER'.lower() in s.lower():
-                time.sleep(3)
-                writeText(s)
+                writeText(oldText)
             else:
                 print('Ignored!!!')
         print('----------------------')
@@ -42,9 +44,11 @@ def get_message_from_telegram():
 if __name__ == '__main__':
     
     oldText = []
+    for i in range(0,5):
+        oldText.append(i)
     id = '14631934'
     hash = "62c6c4263e06b6f800acc32c188f1d6f"
-    telApiName = 'newApi1'
+    telApiName = 'api'
     hour = 10
     print('Bot wll sleep for next ',hour,"Hours")
     # time.s/r * 3600)

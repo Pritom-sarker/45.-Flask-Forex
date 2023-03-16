@@ -50,7 +50,7 @@ if __name__ == '__main__':
         oldText.append(i)
     id = '21000478'
     hash = "fb9ec891a5dfefb02c0b41d78029d5a2"
-    telApiName = 'api1'
+    telApiName = 'ms'
     hour = 10
     print('Bot wll sleep for next ',hour,"Hours")
     # time.s/r * 3600)

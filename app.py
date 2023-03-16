@@ -32,17 +32,25 @@ def hello_world():
     return s
 
 def read_file():
+    global tempTextList
     while True:
         try:
             f = open('data.txt','r')
             s = ''
             for line in f:
                 s+=line
-            if s not in text_list:
-                text_list.append(s)
-                all_data.append([datetime.now().strftime("%d/%m/%Y %H:%M:%S"), s])
-                print(all_data)
-            f.close()
+            orders = []
+            if s not in tempTextList:
+                tempTextList.append(s)
+                for ix in s.split('#'):
+                    orders.append(ix)
+                
+                for order in orders:
+                    if order not in text_list:
+                        text_list.append(order)
+                        all_data.append([datetime.now().strftime("%d/%m/%Y %H:%M:%S"), order])
+                        print(all_data)
+                f.close()
         except:
             print('Error!!')
 
@@ -50,8 +58,10 @@ def read_file():
 if __name__ == '__main__':
     all_data = [ ]
     text_list = []
+    tempTextList = []
     thread = Thread(target = read_file)
     thread.start()
     app.run(host= "199.247.31.183" , port="80")
+    # app.run(host='0.0.0.0' , port='80')
     
 	

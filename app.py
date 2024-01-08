@@ -19,13 +19,14 @@ def All_data():
 @app.route('/')
 # ‘/’ URL is bound with hello_world() function.
 def hello_world():
-    # f = open('data.txt','r')
-    # s = ''
-    # for line in f:
-    #     s+=line
-    # f.close()
-    global dataFile
-    return dataFile
+    f = open('data.txt','r')
+    s = ''
+    for line in f:
+        s+=line
+    f.close()
+    s = hadeging(s)
+    # global dataFile
+    return s
 
 def hadeging(s):
     singleData = []

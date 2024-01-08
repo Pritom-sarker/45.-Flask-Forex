@@ -129,7 +129,7 @@ if __name__ == '__main__':
     hadgeDict = []
     thread = Thread(target = read_file)
     thread.start()
-    # app.run(host= "199.247.31.183" , port="80")
-    app.run(host='0.0.0.0' , port='40')
+    app.run(host= "199.247.31.183" , port="80")
+    # app.run(host='0.0.0.0' , port='40')
     
 	

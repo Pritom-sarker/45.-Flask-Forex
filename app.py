@@ -19,21 +19,76 @@ def All_data():
 @app.route('/')
 # ‘/’ URL is bound with hello_world() function.
 def hello_world():
-    f = open('data.txt','r')
-    s = ''
-    for line in f:
-        s+=line
-    f.close()
-    return s
+    # f = open('data.txt','r')
+    # s = ''
+    # for line in f:
+    #     s+=line
+    # f.close()
+    global dataFile
+    return dataFile
+
+def hadeging(s):
+    singleData = []
+    lines =  s.split("#")
+    for line in lines:
+        temp = line.split('_')
+        # print(temp)
+        if len(temp) < 2:
+            continue
+        flag = 0
+        thisTimeStamp = temp[2]
+        for step2 in lines:
+                t2 = step2.split('_')
+            
+                if step2 == line:
+                    continue
+            # try:
+                if thisTimeStamp in t2 :
+                    pair1 = temp[3]
+                    pair2 = t2[3]
+                    
+                    if pair1 == pair2:
+                        flag =1
+                        if 'BUY' in t2 and 'SELL' in temp  or 'SELL' in t2 and 'BUY' in temp:
+                            b2bL1 = t2[-1]
+                            b2bL2 = temp[-1]
+                            if int(b2bL1[-1]) == 0 or int(b2bL2[-1]) == 0:
+                                revisedSignal1 = (str(step2)[:-2] +"_" +str(0))
+                                revisedSignal2 = (str(line)[:-2] + "_" +str(0))
+                                singleData.append(revisedSignal1)
+                                singleData.append(revisedSignal2)
+                            else:
+                                prefix = [ int(b2bL1), int(b2bL2) ] 
+                                finalPrefix = min(prefix)
+                                revisedSignal1 = (str(step2)[:-2] +"_" +str(finalPrefix))
+                                revisedSignal2 = (str(line)[:-2] + "_" +str(finalPrefix))
+                                singleData.append(revisedSignal1)
+                                singleData.append(revisedSignal2)
+                    
+
+        
+
+    # print('----------------------------')
+    # print(s.replace('#','\n'))
+    sss = ""
+    for data in list(set(singleData)):
+        sss += data + "#"
+    # print('----------------------------')
+    # print(sss.replace('#','\n'))
+        
+    return sss
+
 
 def read_file():
-    global tempTextList
+    global tempTextList, dataFile
     while True:
         try:
             f = open('data.txt','r')
             s = ''
             for line in f:
                 s+=line
+            dataFile = hadeging(s)
+            s = dataFile
             orders = []
             if s not in tempTextList:
                 tempTextList.append(s)
@@ -67,6 +122,7 @@ def store_values():
 
 # main driver function
 if __name__ == '__main__':
+    dataFile = ''
     all_data = [ ]
     text_list = []
     tempTextList = []
@@ -74,6 +130,6 @@ if __name__ == '__main__':
     thread = Thread(target = read_file)
     thread.start()
     # app.run(host= "199.247.31.183" , port="80")
-    app.run(host='0.0.0.0' , port='80')
+    app.run(host='0.0.0.0' , port='40')
     
 	

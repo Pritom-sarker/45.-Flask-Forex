@@ -72,17 +72,19 @@ def hadeging(s):
 
     # print('----------------------------')
     # print(s.replace('#','\n'))
-    def changeDate(temp):
+    def changeDate(temp,cx):
         parts = str(temp).split('_')
-        parts[2] = str(random.randrange(0,100))
+        parts[2] = str(int(parts[2]) + cx)
         s = ""
         for prt in parts:
             s+=prt+"_"
         
         return s[:-1]
     sss = ""
+    cx = 0
     for data in list(set(singleData)):
-        sss += changeDate(data) + "#"
+        cx+=1
+        sss += changeDate(data,cx) + "#"
     # print('----------------------------')
     # print(sss.replace('#','\n'))
         
@@ -109,24 +111,10 @@ def read_file():
                     if order not in text_list:
                         text_list.append(order)
                         all_data.append([datetime.now().strftime("%d/%m/%Y %H:%M:%S"), order])
-                print(all_data)
+                # (all_dprintata)
                 f.close()
         except:
             print('Error!!')
-
-@app.route('/store_values', methods=['GET'])
-def store_values():
-    # Retrieve values from the GET request
-    value1 = request.args.get('value1')
-    value2 = request.args.get('value2')
-
-    # Do something with the values (e.g., store them in a database)
-    # For demonstration purposes, print them to the console
-    hadgeDict[str(value1)] = str(value2)
-    print((f"Value 1: {value1}, Value 2: {value2}"))
-
-    # You can also return a response if needed
-    return "Values stored successfully!"
 
 
 
@@ -137,9 +125,10 @@ if __name__ == '__main__':
     text_list = []
     tempTextList = []
     hadgeDict = []
+    fingalSignals = []
     thread = Thread(target = read_file)
     thread.start()
     app.run(host= "199.247.31.183" , port="80")
-    # app.run(host='0.0.0.0' , port='40')
+    # app.run(host='0.0.0.0' , port='80')
     
 	

@@ -5,26 +5,7 @@ from threading import Thread
 from datetime import datetime
 import pandas as pd
 import random
-
-
-app = Flask(__name__)
- 
-@app.route('/hist')
-def All_data():
-    global all_data
-    
-    df = pd.DataFrame(all_data,columns=['Datetime','Text'])
-    df = df.sort_values(by=['Datetime'], ascending=False)
-    return df.to_html(header="true", table_id="table")
-
-@app.route('/')
-# ‘/’ URL is bound with hello_world() function.
-def hello_world():
-    global lastTrades
-    temp = lastTrades[-6:]
-    print(temp)
-    html = hadeging(temp)
-    return html
+import time
 
 def hadeging(s):
     singleData = []
@@ -71,41 +52,49 @@ def hadeging(s):
         return s[:-1]
     
     sss = ""
+    print(list(set(singleData)))
     for data in list(set(singleData)):
         sss += changeDate(data) + "#"
         
     return sss
 
 
-def read_file():
-    while True:
-        try:
-            global tempTextList
-            f = open('data.txt','r')
-            s = ''
-            for line in f:
-                s+=line
-            orders = s.split("#")
-            for order in orders:
-                if order not in lastTrades and len(order) > 4: 
-                    lastTrades.append(order)
-                    all_data.append([datetime.now().strftime("%d/%m/%Y %H:%M:%S"), order])
-            f.close()
-        except:
-            print('Data reading not working!')
+def main():
+    global lastTrades
+    
+    temp = lastTrades[-3:]
+    print(temp)
+    new = hadeging(temp)
+    print(new.replace("#","\n"))
 
+
+def read_file():
+    global tempTextList
+    f = open('data.txt','r')
+    s = ''
+    for line in f:
+        s+=line
+    orders = s.split("#")
+    for order in orders:
+        if order not in lastTrades and len(order) > 4: 
+            lastTrades.append(order)
+            all_data.append([datetime.now().strftime("%d/%m/%Y %H:%M:%S"), order])
+    f.close()
 
 
 # main driver function
 if __name__ == '__main__':
-    dataFile = ''
     all_data = [ ]
-    text_list = []
     lastTrades = []
     fingalSignals = {}
-    thread = Thread(target = read_file)
-    thread.start()
-    app.run(host= "199.247.31.183" , port="80")
-    # app.run(host='0.0.0.0' , port='80')
+    tempTextList = []
+    
+    while True:
+        thread = Thread(target = read_file)
+        thread.start()
+        print('-------------')
+        main()
+        print(len(lastTrades))
+        input('Press')
     
 	

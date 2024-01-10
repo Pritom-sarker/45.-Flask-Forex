@@ -2,7 +2,7 @@ s = "ORDER_9_1_BTCUSD_BUY_TP.0.13_SL.0.13_1#ORDER_9_1_BTCUSD_SELL_TP.0.05_SL.0.0
 
 newS =s
 singleData = []
-lines =  s.split("#")
+lines =  ['ORDER_102_1704915600000_BB_BUY_TP.0.52_SL.0.52_5', 'ORDER_102_1704915600000_CC_SELL_TP.0.52_SL.0.52_5', 'ORDER_102_1704915600000_CC_BUY_TP.0.52_SL.0.52_5']
 timing = []
 for line in lines:
     temp = line.split('_')
@@ -48,11 +48,11 @@ print(s.replace('#','\n'))
 import random
 def changeDate(temp):
     parts = str(temp).split('_')
-    parts[2] = str(random.randrange(0,100))
+    if parts[4] == 'BUY':
+        parts[2] = str(int(parts[2]) - 1)
     s = ""
     for prt in parts:
         s+=prt+"_"
-    
     return s[:-1]
         
 sss = ""

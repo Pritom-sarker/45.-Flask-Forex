@@ -1,8 +1,9 @@
-s = "ORDER_9_1704660010000_ETHUSD_BUY_TP.0.13_SL.0.13_1#ORDER_8_22660120000_BTCUSD_BUY_TP.0.05_SL.0.05_1#ORDER_9_1704660120000_BTCUSD_SELL_TP.0.05_SL.0.05_0#ORDER_8_1704660720000_BTCUSD_BUY_TP.0.05_SL.0.05_1#ORDER_9_1704660720000_BTCUSD_SELL_TP.0.05_SL.0.05_5#"
+s = "ORDER_9_1_BTCUSD_BUY_TP.0.13_SL.0.13_1#ORDER_9_1_BTCUSD_SELL_TP.0.05_SL.0.05_5##ORDER_9_1_ETHUSD_SELL_TP.0.05_SL.0.05_5#"
 
 newS =s
 singleData = []
 lines =  s.split("#")
+timing = []
 for line in lines:
     temp = line.split('_')
     # print(temp)
@@ -10,6 +11,7 @@ for line in lines:
         continue
     flag = 0
     thisTimeStamp = temp[2]
+    timing.append(thisTimeStamp)
     for step2 in lines:
             t2 = step2.split('_')
         
@@ -34,8 +36,7 @@ for line in lines:
                             prefix = [ int(b2bL1), int(b2bL2) ] 
                             finalPrefix = min(prefix)
                             revisedSignal1 = (str(step2)[:-2] +"_" +str(finalPrefix))
-                            revisedSignal2 = str(str(line)[:-2] + "_" +str(finalPrefix)).replace(thisTimeStamp,str(int(thisTimeStamp)+1))
-                            print(revisedSignal2)
+                            revisedSignal2 = (str(line)[:-2] + "_" +str(finalPrefix))
                             singleData.append(revisedSignal1)
                             singleData.append(revisedSignal2)
                 
@@ -44,9 +45,21 @@ for line in lines:
 
 print('----------------------------')
 print(s.replace('#','\n'))
+import random
+def changeDate(temp):
+    parts = str(temp).split('_')
+    parts[2] = str(random.randrange(0,100))
+    s = ""
+    for prt in parts:
+        s+=prt+"_"
+    
+    return s[:-1]
+        
 sss = ""
 for data in list(set(singleData)):
-    sss += data + "#"
+    sss += changeDate(data) + "#"
+# for data in list(set(singleData)):
+#     sss += str(data) + "#"
 print('----------------------------')
 print(sss.replace('#','\n'))
     

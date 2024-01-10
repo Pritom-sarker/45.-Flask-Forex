@@ -4,6 +4,7 @@ from flask import Flask,request
 from threading import Thread
 from datetime import datetime
 import pandas as pd
+import random
 
 
 app = Flask(__name__)
@@ -71,9 +72,17 @@ def hadeging(s):
 
     # print('----------------------------')
     # print(s.replace('#','\n'))
+    def changeDate(temp):
+        parts = str(temp).split('_')
+        parts[2] = str(random.randrange(0,100))
+        s = ""
+        for prt in parts:
+            s+=prt+"_"
+        
+        return s[:-1]
     sss = ""
     for data in list(set(singleData)):
-        sss += data + "#"
+        sss += changeDate(data) + "#"
     # print('----------------------------')
     # print(sss.replace('#','\n'))
         

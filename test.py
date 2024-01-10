@@ -34,7 +34,8 @@ for line in lines:
                             prefix = [ int(b2bL1), int(b2bL2) ] 
                             finalPrefix = min(prefix)
                             revisedSignal1 = (str(step2)[:-2] +"_" +str(finalPrefix))
-                            revisedSignal2 = (str(line)[:-2] + "_" +str(finalPrefix))
+                            revisedSignal2 = str(str(line)[:-2] + "_" +str(finalPrefix)).replace(thisTimeStamp,str(int(thisTimeStamp)+1))
+                            print(revisedSignal2)
                             singleData.append(revisedSignal1)
                             singleData.append(revisedSignal2)
                 
